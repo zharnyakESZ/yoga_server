@@ -1,32 +1,130 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <title>Вход в личный кабинет йоги</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в личный кабинет | Цветочная практика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fbf9f6;
+            /* Наш фирменный фон */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #eae6df;
+            box-shadow: 0 10px 25px rgba(74, 107, 93, 0.05);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            color: #2c3e35;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Стилизация полей формы Django */
+        .login-form p {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #2c3e35;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #eae6df;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #fbf9f6;
+            outline: none;
+            font-weight: normal;
+        }
+
+        .login-form input:focus {
+            border-color: #4a6b5d;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #4a6b5d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #3b5449;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
-<body style="font-family: sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
 
-    <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 320px;">
-        <h2 style="text-align: center; color: #2c3e50; margin-top: 0;">Вход для йогов</h2>
-        
-        <form method="post">
+<body>
+
+    <div class="login-card">
+        <div class="login-icon">🔒</div>
+        <h2 class="login-title">Вход в кабинет</h2>
+        <style>
+            .errorlist {
+                padding: 0;
+                margin: 0;
+            }
+
+            .errorlist li {
+                color: #e74c3c;
+                list-style-type: none;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <form method="post" class="login-form">
             {% csrf_token %}
-            
-            {% if form.non_field_errors %}
-                <div style="color: red; margin-bottom: 15px; font-size: 14px;">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
+            <!-- Выводим поля ввода имени и пароля -->
+            {{ form.as_p }}
 
-            <div style="margin-bottom: 15px;">
-                {{ form.as_p }}
-            </div>
-            
-            <button type="submit" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
-                Войти в практику
-            </button>
+            <button type="submit" class="btn-login">Войти</button>
+            <a href="{% url 'register' %}"
+                style="display: inline-block; margin-top: 20px; font-size: 14px; color: #4a6b5d; text-decoration: none;">Нет
+                аккаунта? Зарегистрироваться</a>
         </form>
     </div>
 
 </body>
+
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ topic.title }} | Гармония</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fbf9f6; color: #333; margin: 0; padding: 40px; }
+        .forum-container { max-width: 800px; margin: 0 auto; }
+        .main-post { background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #eae6df; margin-bottom: 30px; }
+        .main-title { color: #2c3e35; margin-top: 0; }
+        .comment-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #eae6df; margin-bottom: 15px; }
+        .comment-meta { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: 600; }
+        .comment-meta span { color: #4a6b5d; }
+        .comment-form { margin-top: 30px; }
+        .comment-form textarea { width: 100%; padding: 12px; border: 1px solid #eae6df; border-radius: 8px; background: white; outline: none; box-sizing: border-box; }
+        .btn-submit { background: #4a6b5d; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-submit:hover { background: #3b5449; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #4a6b5d; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="forum-container">
+        <a href="/users/forum/" class="back-link">← Назад к списку тем</a>
+
+        <!-- Главный пост темы -->
+        <div class="main-post">
+            <h2 class="main-title">{{ topic.title }}</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #444;">{{ topic.description }}</p>
+            <div style="font-size: 12px; color: #999; margin-top: 20px;">Опубликовал: {{ topic.author.username }} | {{ topic.created_at|date:"d.m.Y H:i" }}</div>
+        </div>
+
+        <h3 style="color: #2c3e35; margin-bottom: 20px;">Обсуждение:</h3>
+
+        <!-- Комментарии -->
+<div class="comments-list">
+            {% for comment in comments %}
+                <div class="comment-card">
+                    <div class="comment-meta">Участник: <span>{{ comment.author.username }}</span> | {{ comment.created_at|date:"d.m.Y H:i" }}</div>
+                    <p style="margin: 0 0 15px 0; font-size: 15px; color: #333;">{{ comment.text }}</p>
+                    
+                    <div style="display: flex; gap: 15px; font-size: 13px;">
+                        <!-- Редактировать: видит автор или админ -->
+                        {% if request.user == comment.author or request.user.is_superuser or request.user.is_staff %}
+                            <a href="{% url 'edit_comment' comment.id %}" style="color: #4a6b5d; text-decoration: none;">✏️ Редактировать</a>
+                        {% endif %}
+
+                        <!-- Удалить: видит ТОЛЬКО админ -->
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            <a href="{% url 'delete_comment' comment.id %}" style="color: #ff4d4d; text-decoration: none;" onclick="return confirm('Удалить этот комментарий?')">🗑 Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p style="color: #888; font-style: italic;">Здесь пока нет ответов.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Форма отправки ответа (Доступна только зарегистрированным) -->
+        {% if request.user.is_authenticated %}
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            <textarea name="text" rows="4" placeholder="Напишите ваш ответ участникам..." required></textarea>
+            <button type="submit" class="btn-submit">Отправить сообщение</button>
+        </form>
+        {% else %}
+        <p style="color: #666; text-align: center; margin-top: 20px;">Хотите принять участие в обсуждении? <a href="{% url 'login' %}" style="color: #4a6b5d; font-weight: 600;">Войдите в личный кабинет</a>.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

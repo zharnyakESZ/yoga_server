@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин оборудования | Цветочная практика</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fbf9f6;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .shop-title {
+            text-align: center;
+            color: #2c3e35;
+            font-size: 28px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        /* Сетка для карточек */
+        .shop-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        /* Стили вертикальной карточки
+        .product-card { background: white; border-radius: 20px; border: 1px solid #eae6df; width: 300px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.01); transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        /* Блок для картинки */
+        .image-container {
+            width: 100%;
+            height: 200px;
+            background-color: #f7f5f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            color: #ccc;
+            font-size: 40px;
+        }
+
+        /* Текстовый контент */
+        .product-info {
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 20px;
+            color: #2c3e35;
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 14px;
+            color: #8a9a86;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+            max-height: 120px;
+            /* Максимальная высота текста */
+            overflow-y: auto;
+            /* Появится аккуратная прокрутка, если текст длинный */
+            padding-right: 5px;
+        }
+
+        /* Кнопка "Купить / Подробнее" */
+        .btn-buy {
+            text-decoration: none;
+            color: #4a6b5d;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* Тег внизу (как "Легко/Сложно" на карточках асан) */
+        .status-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #faf8f5;
+            border: 1px solid #eae6df;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            align-self: center;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="{% url 'joga' %}" class="back-link">← В личный кабинет</a>
+    <h1 class="shop-title">Оборудование для фитнеса и йоги</h1>
+
+    <div class="shop-grid">
+        {% for item in items %}
+        <div class="product-card">
+            <div class="image-container">
+                {% if item.image_url %}
+                <img src="{{ item.image_url.url }}" alt="{{ item.title }}" class="product-image">
+                {% else %}
+                <div class="no-image">📦</div>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">{{ item.title }}</h2>
+                <div class="product-price">{{ item.price }} руб.</div>
+                <p class="product-desc">{{ item.description }}</p>
+
+                <a href="#" class="btn-buy">Купить...</a>
+
+                <div class="status-tag">
+                    <span class="status-dot"></span> В наличии
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p style="color: #888;">Товары еще не добавлены. Зайдите в админку, чтобы добавить оборудование!</p>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

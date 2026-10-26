@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | Цветочная практика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fbf9f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .register-card {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #eae6df;
+            box-shadow: 0 10px 25px rgba(74, 107, 93, 0.05);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .register-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .register-title {
+            font-size: 24px;
+            color: #2c3e35;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .register-form p {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #2c3e35;
+            font-weight: 600;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #eae6df;
+            border-radius: 10px;
+            font-size: 15px;
+            background-color: #fbf9f6;
+            outline: none;
+            font-weight: normal;
+        }
+
+        .register-form input:focus {
+            border-color: #4a6b5d;
+        }
+
+        /* Стили для системного текста подсказок Django к паролю */
+        .register-form .helptext {
+            font-size: 12px;
+            color: #888;
+            font-weight: normal;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #4a6b5d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-register:hover {
+            background-color: #3b5449;
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #4a6b5d;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-card">
+        <div class="register-icon">📝</div>
+        <h2 class="register-title">Регистрация</h2>
+        <style>
+            /* Стиль для ошибок валидации */
+            /* Стиль для ошибок валидации (нижний блок) */
+            .errorlist {
+                padding: 0;
+                margin: 0;
+            }
+
+            .errorlist li {
+                color: #e74c3c;
+                /* Яркий красный */
+                list-style-type: none;
+                font-size: 14px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            /* Стиль для правил-подсказок к паролю (верхний блок с точками) */
+            form ul {
+                padding-left: 0;
+                /* Убирает отступ слева */
+                margin: 15px 0;
+            }
+
+            form ul li {
+                list-style-type: none;
+                /* УБИРАЕТ ЧЁРНЫЕ ТОЧКИ */
+                color: #7f8c8d;
+                /* Красивый приглушенный серый цвет */
+                font-size: 13px;
+                text-align: center;
+                /* Центрирует текст, как у вас на макете */
+                margin-bottom: 8px;
+            }
+
+            .helptext {
+                color: #7f8c8d;
+                /* Красивый серый цвет вместо дефолтного */
+                font-size: 12px;
+                display: block;
+                margin-top: 5px;
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <form method="post" class="register-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-register">Создать аккаунт</button>
+        </form>
+
+        <a href="{% url 'login' %}" class="login-link">Уже есть аккаунт? Войти</a>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форум практиков | Гармония</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fbf9f6; color: #333; margin: 0; padding: 40px; }
+        .forum-container { max-width: 800px; margin: 0 auto; }
+        .forum-title { color: #2c3e35; text-align: center; margin-bottom: 30px; }
+        .topic-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #eae6df; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .topic-info a { font-size: 18px; color: #4a6b5d; font-weight: 600; text-decoration: none; }
+        .topic-info a:hover { text-decoration: underline; }
+        .topic-meta { font-size: 13px; color: #888; margin-top: 5px; }
+        .forum-form { background: white; padding: 25px; border-radius: 12px; border: 1px solid #eae6df; margin-top: 40px; }
+        .forum-form input, .forum-form textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #eae6df; border-radius: 8px; outline: none; background: #fbf9f6; box-sizing: border-box; }
+        .btn-submit { background: #4a6b5d; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: 600; cursor: pointer; }
+        .btn-submit:hover { background: #3b5449; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #4a6b5d; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="forum-container">
+        <a href="/users/" class="back-link">← В личный кабинет</a>
+        <h2 class="forum-title">Форум «Гармония»</h2>
+
+        <!-- Список тем -->
+        <div class="topics-list">
+            {% for topic in topics %}
+                <div class="topic-card">
+                    <div class="topic-info">
+                        <a href="{% url 'topic_detail' topic.id %}">{{ topic.title }}</a>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 14px;">{{ topic.description }}</p>
+                        <div class="topic-meta">Автор: {{ topic.author.username }} | {{ topic.created_at|date:"d.m.Y H:i" }}</div>
+                    </div>
+                    <span style="background: #fbf9f6; padding: 5px 12px; border-radius: 12px; font-size: 13px; color: #555;">Ответов: {{ topic.comments.count }}</span>
+                </div>
+            {% empty %}
+                <p style="text-align: center; color: #888;">Тем пока нет. Станьте первым, кто создаст обсуждение!</p>
+            {% endfor %}
+        </div>
+
+        <!-- Форма создания новой темы -->
+        <form method="post" class="forum-form">
+            {% csrf_token %}
+            <h3 style="color: #2c3e35; margin-top: 0;">Создать новое обсуждение</h3>
+            <input type="text" name="title" placeholder="Название темы обсуждения" required>
+            <textarea name="description" rows="3" placeholder="Краткое описание темы или ваш вопрос..."></textarea>
+            <button type="submit" class="btn-submit">Опубликовать тему</button>
+        </form>
+    </div>
+</body>
+</html>

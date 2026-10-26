@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать сообщение | Цветочная практика</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fbf9f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .edit-card { background: white; padding: 40px; border-radius: 20px; border: 1px solid #eae6df; max-width: 500px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        h3 { color: #2c3e35; margin-top: 0; }
+        textarea { width: 100%; padding: 12px; border: 1px solid #eae6df; border-radius: 10px; font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 20px; }
+        .btn-save { background: #4a6b5d; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: 600; cursor: pointer; }
+        .btn-cancel { color: #888; text-decoration: none; font-size: 14px; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="edit-card">
+        <h3>Редактировать сообщение</h3>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="text" rows="5" required>{{ comment.text }}</textarea>
+            <button type="submit" class="btn-save">Сохранить изменения</button>
+            <a href="/users/forum/{{ comment.topic.id }}/" class="btn-cancel">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>
